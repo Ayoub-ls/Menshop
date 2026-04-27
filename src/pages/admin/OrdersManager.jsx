@@ -11,7 +11,12 @@ const OrdersManager = () => {
     try {
       const res = await fetch('/api/orders');
       const data = await res.json();
-      setOrders(data);
+      if (Array.isArray(data)) {
+        setOrders(data);
+      } else {
+        console.error("API Error:", data);
+        setOrders([]);
+      }
     } catch (error) {
       console.error("Failed to fetch orders:", error);
     } finally {

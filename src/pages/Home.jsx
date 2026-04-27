@@ -19,8 +19,16 @@ const Home = () => {
         ]);
         const productsData = await productsRes.json();
         const categoriesData = await categoriesRes.json();
-        setProducts(productsData);
-        setCategories(categoriesData);
+        if (Array.isArray(productsData)) {
+          setProducts(productsData);
+        } else {
+          setProducts([]);
+        }
+        if (Array.isArray(categoriesData)) {
+          setCategories(categoriesData);
+        } else {
+          setCategories([]);
+        }
       } catch (error) {
         console.error("Failed to fetch data:", error);
       } finally {

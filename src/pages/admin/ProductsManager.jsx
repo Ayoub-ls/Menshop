@@ -24,7 +24,13 @@ const ProductsManager = () => {
     try {
       const res = await fetch('/api/products');
       const data = await res.json();
-      setProducts(data);
+      if (Array.isArray(data)) {
+        setProducts(data);
+      } else {
+        console.error("API Error:", data);
+        alert(`API Error: ${data.message || 'Unknown error fetching products'}`);
+        setProducts([]);
+      }
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {

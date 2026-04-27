@@ -28,7 +28,11 @@ const ProductDetail = () => {
         const relatedRes = await fetch(`/api/products?category=${data.category}`);
         if (relatedRes.ok) {
           const relatedData = await relatedRes.json();
-          setRelatedProducts(relatedData.filter(p => p.id !== data.id).slice(0, 4));
+          if (Array.isArray(relatedData)) {
+            setRelatedProducts(relatedData.filter(p => p.id !== data.id).slice(0, 4));
+          } else {
+            setRelatedProducts([]);
+          }
         }
       } catch (err) {
         console.error(err);

@@ -17,7 +17,11 @@ const Shop = () => {
     fetch('/api/products')
       .then(res => res.json())
       .then(data => {
-        setProducts(data);
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          setProducts([]);
+        }
         setLoading(false);
       })
       .catch(err => {
